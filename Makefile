@@ -6,7 +6,7 @@
 #    By: gmorer <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/06 11:00:01 by gmorer            #+#    #+#              #
-#    Updated: 2017/06/06 13:28:35 by gmorer           ###   ########.fr        #
+#    Updated: 2017/06/07 15:59:14 by gmorer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ CPATH = src/
 HPATH = inc/
 OPATH = obj/
 CFILES =	malloc.c\
+			malloc_lib.c\
 			realloc.c\
 			free.c
 
