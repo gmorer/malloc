@@ -6,16 +6,18 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2017/06/08 14:53:50 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/06/09 20:34:31 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+#include <stdio.h>
 
 void		*new_block(void *addr, size_t size, t_zone *zone, t_block *prev)
 {
 	t_block *block;
 
+	printf("new block at %p\n", addr);
 	block = addr;
 	block->size = size;
 	block->free = 0;
@@ -24,14 +26,6 @@ void		*new_block(void *addr, size_t size, t_zone *zone, t_block *prev)
 		prev->next = block;
 	block->next = (void*)0;
 	return (addr + sizeof(t_block));
-}
-
-void		*add_block(t_zone *zone, size_t size)
-{
-	t_block		*tmp;
-
-	tmp = zone->
-	return (rslt);
 }
 
 /* 
@@ -54,20 +48,25 @@ void		*new_zone(void *addr, size_t size, t_zone *prev)
 	getrlimit(RLIMIT_MEMLOCK, &limit);
 	if (alloc > limit.rlim_cur)
 	{
-		write(2, "not enought space\n", 18);
-		return (NULL);
+		alloc = size + sizeof(t_block) + sizeof(t_zone);
+		if (alloc > limit.rlim_cur)
+		{
+			write(2, "not enought space\n", 18);
+			return ((void*)0);
+		}
 	}
-	if ((rslt = mmap(addr, alloc, PROT_READ
-				| PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0) == MAP_FAILED))
+	if ((rslt = mmap(addr, alloc, PROT_READ | PROT_WRITE, MAP_ANON
+					| MAP_PRIVATE, -1, 0)) == MAP_FAILED)
 	{
 		write(2, "mmap failed\n", 12);
 		return ((void*)0);
 	}
+	printf("new zone at %p\n", rslt);
 	zone = rslt;
 	zone->size = alloc - sizeof(t_zone);
 	if (prev)
 		prev->next = zone;
 	zone->next = (void*)0;
 	zone->use_space = size + sizeof(t_block);
-	return (new_block(rslt + sizeof(t_zone), size, (t_zone*)rslt));
+	return (new_block(rslt + sizeof(t_zone), size, (t_zone*)rslt, (void*)0));
 }

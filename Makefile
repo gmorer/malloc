@@ -6,7 +6,7 @@
 #    By: gmorer <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/06 11:00:01 by gmorer            #+#    #+#              #
-#    Updated: 2017/06/07 15:59:14 by gmorer           ###   ########.fr        #
+#    Updated: 2017/06/09 20:26:47 by gmorer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,15 +15,15 @@ ifeq ($(HOSTTYPE),)
 endif
 NAME = libft_malloc_$(HOSTTYPE).so
 CC = clang
-CFLAGS= -Weverything
+CFLAGS= -Weverything -fsanitize=address
 CPATH = src/
 HPATH = inc/
 OPATH = obj/
 CFILES =	malloc.c\
 			malloc_lib.c\
 			realloc.c\
-			free.c
-
+			free.c\
+			new_elem.c
 HFILES = inc/malloc.h
 INC = $(addprefix -I , $(HPATH))
 OBJ = $(addprefix $(OPATH), $(CFILES:.c=.o))
@@ -33,13 +33,13 @@ OBJ = $(addprefix $(OPATH), $(CFILES:.c=.o))
 all: $(NAME)
 
 $(NAME) : $(OBJ)
-	ar -rc $(NAME) $(OBJ)
-	ranlib $(NAME)
-	ln -s libft_malloc_$(HOSTTYPE).so libft_malloc.so
+	$(CC) $(OBJ) $(CFLAGS) -o $(NAME)   		        #a supprimer pour le rendu final
+	#$(CC) -shared $(OBJ) $(CFLAGS) -o $(NAME)          #a uncomment pour le rendu final
+	#ln -s libft_malloc_$(HOSTTYPE).so libft_malloc.so  #a uncomment pour le rendu final
 
 $(OPATH)%.o : $(CPATH)%.c $(HFILES)
 	@mkdir -p $(OPATH)
-	$(CC) $(INC) $< -c -o $@
+	$(CC) -g $(INC) $< -c -o $@
 
 clean :
 	rm -f $(OBJ)
