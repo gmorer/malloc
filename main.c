@@ -10,7 +10,10 @@ int main(int argc, char **argv)
 
 	i = 0;
 	lol = ft_malloc(sizeof(char) * 10);
-	ft_malloc(90);
+	write(1, "------------------\n", 20);
+	lolii = ft_malloc(sizeof(char) * 10);
+	write(1, "------------------\n", 20);
+//	ft_malloc(90);
 	if (!lol)
 	{
 		write(1, "malloc return NUll\n", 19);

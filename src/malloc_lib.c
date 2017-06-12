@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:29 by gmorer            #+#    #+#             */
-/*   Updated: 2017/06/09 20:58:49 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/06/12 17:53:02 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,22 @@ t_block			*find_empty_block(size_t size, t_zone *zone)
 {
 	t_block		*tmp;
 
-	tmp = (t_block*)(zone + sizeof(t_zone));
+	printf("zone = %p\n", zone);
+	tmp = (void*)((t_zone*)zone + 1);
 	printf("looking at %p\n", tmp);
 	while (tmp)
 	{
-		if (tmp->free && tmp->size > size + sizeof(t_block) + 1)
+		if (tmp->free && tmp->size > size + sizeof(t_block) + 1) // some segf on this line
 		{
 			new_block(tmp + size + sizeof(t_block), tmp->size - (size + sizeof(t_block)),zone,  tmp);
 			tmp->size = size;
 			tmp->free = 0;
+			printf("find_empty_block return %p\n", tmp);
 			return (tmp);
 		}
 		tmp = tmp->next;
 	}
+	printf("no empty block in zone:%p\n", zone);
 	return ((void*)0);
 }
 
@@ -59,18 +62,21 @@ void			*some_place(size_t size)
 	while (tmp)
 	{
 		if ((rslt = find_empty_block(size, tmp)) != (void*)0)
-			return (rslt + sizeof(t_block));
-		if (tmp->size >= size)
+			//return ((void*)rslt + sizeof(t_block));
+			return (rslt + 1);
+		if (tmp->size - tmp->use_space >= size + sizeof(t_block))
 		{
-			rslt = (t_block*)(tmp + sizeof(t_zone));
+			printf("there is place in zone:%p, place_left = %lu\n", tmp, tmp->size - tmp->use_space);
+			rslt = (void*)((t_zone*)tmp + 1);
+			printf("1rst block for zone(%p) is block(%p) sizof = %lu\n", tmp, rslt, sizeof(t_zone));
 			while (rslt->next)
 				rslt = rslt->next;
-			rslt = new_block(rslt + sizeof(t_block) + rslt->size, size, tmp, rslt);
+			rslt = new_block((void*)rslt + sizeof(t_block) + rslt->size, size, tmp, rslt);
 			return (rslt);
 		}
 		tmp = tmp->next;
 	}
-	write(1, "some place reuturn NULL\n", 24);
+	write(1, "some place return NULL\n", 23);
 	return ((void*)0);
 }
 
@@ -80,14 +86,19 @@ t_zone			*valid_addr(void *addr)
 	t_block	*block_tmp;
 
 	zone_tmp = g_base;
-	while (zone_tmp && (void*)(zone_tmp + sizeof(t_zone) + zone_tmp->size) < addr)
+	while (zone_tmp && (void*)((void*)zone_tmp + sizeof(t_zone) + zone_tmp->size) < addr)
 		zone_tmp = zone_tmp->next;
 	if (zone_tmp == (void*)0)
+	{
+		printf("return 1\n");
 		return ((void*)0);
-	block_tmp = (t_block*)(zone_tmp) + sizeof(t_zone);
+	}
+	printf("free test for valid zone : %p\n", zone_tmp);
+	block_tmp = (void*)((t_zone*)zone_tmp + 1);
+	printf("1rst block  = %p\n", block_tmp);
 	while (block_tmp)
 	{
-		if (block_tmp == addr)
+		if (block_tmp + 1 == addr)
 			return (zone_tmp);
 		block_tmp = block_tmp->next;
 	}
@@ -98,11 +109,18 @@ int				is_empty_zone(t_zone *addr)
 {
 	t_block		*tmp;
 
-	tmp = (t_block*)addr + sizeof(addr);
+	printf("zone = %p\n", addr);
+	tmp = (void*)((t_zone*)addr + 1);
+	printf("zone = %p\n", addr);
+	printf("test of empty_zone %p\n", tmp);
 	while (tmp)
 	{
 		if (tmp->free == 0)
+		{
+			printf("%p isnt free\n", tmp);
 			return (0);
+		}
+		printf("%p is free\n", tmp);
 		tmp = tmp->next;
 	}
 	return (1);

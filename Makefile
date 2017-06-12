@@ -6,7 +6,7 @@
 #    By: gmorer <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/06 11:00:01 by gmorer            #+#    #+#              #
-#    Updated: 2017/06/09 20:26:47 by gmorer           ###   ########.fr        #
+#    Updated: 2017/06/12 17:25:17 by gmorer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ CFILES =	malloc.c\
 			malloc_lib.c\
 			realloc.c\
 			free.c\
-			new_elem.c
+			new_elem.c\
+			show_alloc_mem.c
 HFILES = inc/malloc.h
 INC = $(addprefix -I , $(HPATH))
 OBJ = $(addprefix $(OPATH), $(CFILES:.c=.o))
@@ -33,9 +34,9 @@ OBJ = $(addprefix $(OPATH), $(CFILES:.c=.o))
 all: $(NAME)
 
 $(NAME) : $(OBJ)
-	$(CC) $(OBJ) $(CFLAGS) -o $(NAME)   		        #a supprimer pour le rendu final
-	#$(CC) -shared $(OBJ) $(CFLAGS) -o $(NAME)          #a uncomment pour le rendu final
-	#ln -s libft_malloc_$(HOSTTYPE).so libft_malloc.so  #a uncomment pour le rendu final
+	#$(CC) $(OBJ) $(CFLAGS) -o $(NAME)   		        #a supprimer pour le rendu final
+	$(CC) -shared $(OBJ) $(CFLAGS) -o $(NAME)          #a uncomment pour le rendu final
+	ln -s libft_malloc_$(HOSTTYPE).so libft_malloc.so  #a uncomment pour le rendu final
 
 $(OPATH)%.o : $(CPATH)%.c $(HFILES)
 	@mkdir -p $(OPATH)

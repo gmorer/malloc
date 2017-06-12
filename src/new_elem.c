@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2017/06/09 20:34:31 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/06/12 15:45:49 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,15 @@ void		*new_block(void *addr, size_t size, t_zone *zone, t_block *prev)
 {
 	t_block *block;
 
-	printf("new block at %p\n", addr);
+	printf("new block at %p and malloc zone start at%p\n", addr, addr + sizeof(t_block));
 	block = addr;
 	block->size = size;
 	block->free = 0;
 	block->zone = zone;
+	block->prev = prev;
 	if (prev)
 		prev->next = block;
+	zone->use_space += size + sizeof(t_block); 
 	block->next = (void*)0;
 	return (addr + sizeof(t_block));
 }
@@ -61,12 +63,13 @@ void		*new_zone(void *addr, size_t size, t_zone *prev)
 		write(2, "mmap failed\n", 12);
 		return ((void*)0);
 	}
+	printf("NEW ALLLOC FROM %p TO %p\n", rslt, rslt + alloc);
 	printf("new zone at %p\n", rslt);
 	zone = rslt;
 	zone->size = alloc - sizeof(t_zone);
 	if (prev)
 		prev->next = zone;
 	zone->next = (void*)0;
-	zone->use_space = size + sizeof(t_block);
+	zone->use_space = 0;
 	return (new_block(rslt + sizeof(t_zone), size, (t_zone*)rslt, (void*)0));
 }
