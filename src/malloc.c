@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2017/06/12 17:16:03 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/06/13 10:33:58 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void	*ft_malloc(size_t size)	// a supprimer pour le rendu final
 	void	*addr;
 	t_zone	*temp;
 
+	if (size == 0)
+		return ((void*)0);
 	printf("new malloc of size %lu\n", size);
 	if (g_base == ((void*)0))
 	{

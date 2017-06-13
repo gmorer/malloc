@@ -6,12 +6,31 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:04 by gmorer            #+#    #+#             */
-/*   Updated: 2017/06/12 17:17:04 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/06/13 10:26:06 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 #include <stdio.h>
+
+void	defragment(t_block *ptr)
+{
+	size_t		size;
+	void		*start;
+	void		*end;
+
+	if (ptr->next && ptr->next->free == 1)
+	{
+		ptr->next = ptr->next->next;
+		ptr->size += ptr->next->size + sizeof(t_block);
+	}
+	if (ptr->prev && ptr->prev->free == 1)
+	{
+		ptr->prev->next = ptr->next;
+		ptr->prev->size += ptr->size + sizeof(t_block);
+	}
+	return ;
+}
 
 #ifdef FINAL
 void	free(void *ptr)		// a uncomment pour le rendu final
@@ -37,6 +56,8 @@ void	ft_free(void *ptr)	// a supprimer pour le rendu final
 		write(1, "the real free\n", 14);
 		printf("free : %p size = %lu\n", zone, zone->size + sizeof(t_zone));
 		munmap(zone, zone->size + sizeof(t_zone));
+		return ;
 	}
+	defragment(addr);
 	return ;
 }
