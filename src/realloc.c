@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "malloc.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 /*
  * change the size if enought place after ptr, return ptr
@@ -28,6 +30,7 @@ int		enought_space_after(t_block *ptr, size_t size)
 		return (0);
 	if (ptr->next->size + ptr->size + sizeof(t_block) >= size)
 		return (1);
+	return (0);
 }
 
 void	*fusion(t_block *block, size_t size)
@@ -65,7 +68,7 @@ void	*ft_realloc(void *ptr, size_t len)	// a supprimer pour le rendu final
 #endif
 		return ((void*)0);
 	}
-	if (ptr = (void*)0)
+	if (ptr == (void*)0)
 #ifdef FINAL
 		return (malloc(len));
 #endif
@@ -75,7 +78,7 @@ void	*ft_realloc(void *ptr, size_t len)	// a supprimer pour le rendu final
 	if ((valid_addr(ptr)) == (void*)0)
 	{
 		printf("realloc bad ptr\n");
-		return ;
+		return (NULL);
 	}
 	block = (t_block*)ptr - 1;
 	if (len == block->size)
