@@ -26,12 +26,7 @@ t_zone		*g_base = ((void*)0);
 **   else
 **    retunr (creat new zone after last zone) + size of t_block and t_zone;
 */
-#ifdef FINAL
 void	*malloc(size_t size)	// a uncomment pour le rendu final
-#endif
-#ifndef FINAL
-void	*ft_malloc(size_t size)	// a supprimer pour le rendu final
-#endif
 {
 	void	*addr;
 	t_zone	*temp;

@@ -34,9 +34,8 @@ OBJ = $(addprefix $(OPATH), $(CFILES:.c=.o))
 all: $(NAME)
 
 $(NAME) : $(OBJ)
-	#$(CC) $(OBJ) $(CFLAGS) -o $(NAME)   		        #a supprimer pour le rendu final
 	$(CC) -shared $(OBJ) $(CFLAGS) -o $(NAME)          #a uncomment pour le rendu final
-	ln -s libft_malloc_$(HOSTTYPE).so libft_malloc.so  #a uncomment pour le rendu final
+	ln -fs libft_malloc_$(HOSTTYPE).so libft_malloc.so  #a uncomment pour le rendu final
 
 $(OPATH)%.o : $(CPATH)%.c $(HFILES)
 	@mkdir -p $(OPATH)

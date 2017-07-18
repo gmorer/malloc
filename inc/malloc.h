@@ -13,8 +13,6 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
-//#define FINAL
-
 # define TINY 1024
 # define SMALL 4096
 
@@ -51,16 +49,9 @@ int				is_empty_zone(t_zone *zone);
 void			*add_block(t_zone *zone, size_t size);
 void			*some_place(size_t size);
 size_t			alloc_size(size_t size);
-#ifdef FINAL
 void			free(void *ptr);					// a uncomment pour le rendu final
 void			*realloc(void *ptr, size_t size);	// a uncomment pour le rendu final
 void			*malloc(size_t size);				// a uncomment pour le rendu final
-#endif
-#ifndef FINAL
-void			ft_free(void *ptr);					// a supprimer pour le rendu final
-void			*ft_realloc(void *ptr, size_t size);// a supprimer pour le rendu final
-void			*ft_malloc(size_t size);
-#endif
 void			show_alloc_mem();
 
 #endif

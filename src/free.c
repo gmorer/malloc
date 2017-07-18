@@ -32,12 +32,7 @@ void	defragment(t_block *ptr)
 	return ;
 }
 
-#ifdef FINAL
 void	free(void *ptr)		// a uncomment pour le rendu final
-#endif
-#ifndef FINAL
-void	ft_free(void *ptr)	// a supprimer pour le rendu final
-#endif
 {
 	t_block *addr;
 	t_zone	*zone;
