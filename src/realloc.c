@@ -6,30 +6,19 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:16 by gmorer            #+#    #+#             */
-/*   Updated: 2017/10/07 06:19:00 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/10/07 13:44:50 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-#include <stdio.h>
-
-/*
- * change the size if enought place after ptr, return ptr
- *
- * or new malloc then memcpy then free ptr
- *
- * if ptr == NULL -> malloc
- *
- * if size == 0 ->
- */
 
 int		enought_space_after(t_block *ptr, size_t size)
 {
 	if (!ptr->next || ptr->next->free == 0)
 		return (0);
 	if (ptr->next->size + ptr->size + sizeof(t_block) >= size)
-    	return (1);
-    return (0);
+		return (1);
+	return (0);
 }
 
 void	*fusion(t_block *block, size_t size)
@@ -47,23 +36,19 @@ void	*fusion(t_block *block, size_t size)
 	return ((void*)block + sizeof(t_block));
 }
 
-void	*ft_realloc(void *ptr, size_t len)		// a uncomment pour le rendu final
+void	*realloc(void *ptr, size_t len)
 {
 	t_block		*block;
 	void		*new;
 
 	if (len == 0)
-	{
-		ft_free(ptr);
+		free(ptr);
+	if (len == 0)
 		return ((void*)0);
-	}
 	if (ptr == (void*)0)
-		return (ft_malloc(len));
+		return (malloc(len));
 	if ((valid_addr(ptr)) == (void*)0)
-	{
-		printf("realloc bad ptr\n");
 		return ((void*)0);
-	}
 	block = (t_block*)ptr - 1;
 	if (len == block->size)
 		return (ptr);
@@ -73,9 +58,9 @@ void	*ft_realloc(void *ptr, size_t len)		// a uncomment pour le rendu final
 			return (fusion(block, len));
 		else
 		{
-			ft_free(ptr);
-			new = ft_malloc(len);
+			free(ptr);
+			new = malloc(len);
 		}
 	}
-	return (ft_malloc(len));
+	return (malloc(len));
 }
