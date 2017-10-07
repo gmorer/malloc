@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	write(1, "------------------\n", 20);
 	lolii = ft_malloc(sizeof(char) * 10);
 	write(1, "------------------\n", 20);
-//	ft_malloc(90);
+	printf("adress => %p\n", lol);
 	if (!lol)
 	{
 		write(1, "malloc return NUll\n", 19);
@@ -24,12 +24,13 @@ int main(int argc, char **argv)
 		lol[i] = 'a';
 		i++;
 	}
+	show_alloc_mem();
 	lol[8] = '\0';
 	write(1, lol, 9);
 	write(1, "\n", 1);
 	write(1, "test free1\n", 11);
-	ft_free(lol);
+	//ft_free(lol);
 	write(1, "test free2\n", 11);
-	ft_free(lolii);
+	//ft_free(lolii);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2017/06/12 15:45:49 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/10/07 07:04:19 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ void		*new_zone(void *addr, size_t size, t_zone *prev)
 	size_t			alloc;
 	void			*rslt;
 
+	printf("size:%zu\n", size);
 	alloc = alloc_size(size);
+	printf("alloc size:%zu\n", alloc);
 	getrlimit(RLIMIT_MEMLOCK, &limit);
 	if (alloc > limit.rlim_cur)
 	{

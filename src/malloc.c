@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2017/06/13 10:33:58 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/10/07 07:44:26 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <stdio.h>
 
 t_zone		*g_base = ((void*)0);
-
 
 /*
 ** if first malloc :
@@ -26,14 +25,15 @@ t_zone		*g_base = ((void*)0);
 **   else
 **    retunr (creat new zone after last zone) + size of t_block and t_zone;
 */
-void	*malloc(size_t size)	// a uncomment pour le rendu final
+
+void	*ft_malloc(size_t size)
 {
 	void	*addr;
 	t_zone	*temp;
 
-	if (size == 0)
+	printf("new malloc of size %zu\n", size);
+	if (size == 0 || size > UINT_MAX)
 		return ((void*)0);
-	printf("new malloc of size %lu\n", size);
 	if (g_base == ((void*)0))
 	{
 		write(1, "first malloc\n", 13);

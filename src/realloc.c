@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:16 by gmorer            #+#    #+#             */
-/*   Updated: 2017/06/13 15:25:45 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/10/07 06:19:00 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,18 +47,18 @@ void	*fusion(t_block *block, size_t size)
 	return ((void*)block + sizeof(t_block));
 }
 
-void	*realloc(void *ptr, size_t len)		// a uncomment pour le rendu final
+void	*ft_realloc(void *ptr, size_t len)		// a uncomment pour le rendu final
 {
 	t_block		*block;
 	void		*new;
 
 	if (len == 0)
 	{
-		free(ptr);
+		ft_free(ptr);
 		return ((void*)0);
 	}
 	if (ptr == (void*)0)
-		return (malloc(len));
+		return (ft_malloc(len));
 	if ((valid_addr(ptr)) == (void*)0)
 	{
 		printf("realloc bad ptr\n");
@@ -73,9 +73,9 @@ void	*realloc(void *ptr, size_t len)		// a uncomment pour le rendu final
 			return (fusion(block, len));
 		else
 		{
-			free(ptr);
-			new = malloc(len);
+			ft_free(ptr);
+			new = ft_malloc(len);
 		}
 	}
-	return (malloc(len));
+	return (ft_malloc(len));
 }

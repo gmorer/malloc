@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:04 by gmorer            #+#    #+#             */
-/*   Updated: 2017/06/13 10:26:06 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/10/07 06:17:59 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	defragment(t_block *ptr)
 	return ;
 }
 
-void	free(void *ptr)		// a uncomment pour le rendu final
+void	ft_free(void *ptr)		// a uncomment pour le rendu final
 {
 	t_block *addr;
 	t_zone	*zone;

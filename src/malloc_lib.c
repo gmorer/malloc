@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:29 by gmorer            #+#    #+#             */
-/*   Updated: 2017/06/12 17:53:02 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/10/07 08:36:51 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_zone		*g_base;
 
 size_t			alloc_size(size_t size)
 {
-	int		page;
+	size_t		page;
 
 	page = getpagesize();
 	size += sizeof(t_block) + sizeof(t_zone);
@@ -25,6 +25,7 @@ size_t			alloc_size(size_t size)
 		return ((TINY + page - 1) / page * page);
 	if (size < SMALL)
 		return ((SMALL + page - 1) / page * page);
+	printf("(size + page - 1) / page * page || size=%zu || page=%zu\n", size, page);
 	return ((size + page - 1) / page * page);
 }
 
@@ -71,7 +72,7 @@ void			*some_place(size_t size)
 			printf("1rst block for zone(%p) is block(%p) sizof = %lu\n", tmp, rslt, sizeof(t_zone));
 			while (rslt->next)
 				rslt = rslt->next;
-			rslt = new_block((void*)rslt + sizeof(t_block) + rslt->size, size, tmp, rslt);
+			rslt = new_block((void*)rslt + sizeof(t_block) + rslt->size, size - sizeof(t_block), tmp, rslt);
 			return (rslt);
 		}
 		tmp = tmp->next;

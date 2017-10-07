@@ -6,7 +6,7 @@
 #    By: gmorer <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/06 11:00:01 by gmorer            #+#    #+#              #
-#    Updated: 2017/06/12 17:25:17 by gmorer           ###   ########.fr        #
+#    Updated: 2017/07/22 19:13:05 by gmorer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ ifeq ($(HOSTTYPE),)
 endif
 NAME = libft_malloc_$(HOSTTYPE).so
 CC = clang
-CFLAGS= -Weverything -fsanitize=address
+CFLAGS= -Weverything #-fsanitize=address
 CPATH = src/
 HPATH = inc/
 OPATH = obj/

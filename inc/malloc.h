@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:58:35 by gmorer            #+#    #+#             */
-/*   Updated: 2017/06/13 10:16:52 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/10/07 07:09:24 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 
 # include <sys/mman.h>
 # include <unistd.h>
+# include <limits.h>
 # include <sys/resource.h>
 
 typedef struct s_zone	t_zone;
@@ -49,9 +50,9 @@ int				is_empty_zone(t_zone *zone);
 void			*add_block(t_zone *zone, size_t size);
 void			*some_place(size_t size);
 size_t			alloc_size(size_t size);
-void			free(void *ptr);					// a uncomment pour le rendu final
-void			*realloc(void *ptr, size_t size);	// a uncomment pour le rendu final
-void			*malloc(size_t size);				// a uncomment pour le rendu final
+void			ft_free(void *ptr);					// a uncomment pour le rendu final
+void			*ft_realloc(void *ptr, size_t size);	// a uncomment pour le rendu final
+void			*ft_malloc(size_t size);				// a uncomment pour le rendu final
 void			show_alloc_mem();
 
 #endif
