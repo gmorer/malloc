@@ -15,6 +15,11 @@ ifeq ($(HOSTTYPE),)
 endif
 NAME = libft_malloc_$(HOSTTYPE).so
 CC = clang
+FLAG = -g
+UNAME = $(shell uname)
+ifeq ($(UNAME), Linux)
+	FLAG += -fPIC
+endif
 CFLAGS= -Weverything #-fsanitize=address
 CPATH = src/
 HPATH = inc/
@@ -39,7 +44,7 @@ $(NAME) : $(OBJ)
 
 $(OPATH)%.o : $(CPATH)%.c $(HFILES)
 	@mkdir -p $(OPATH)
-	$(CC) -g $(INC) $< -c -o $@
+	$(CC) $(FLAG) $(INC) $< -c -o $@
 
 clean :
 	rm -f $(OBJ)

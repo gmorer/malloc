@@ -38,7 +38,7 @@ void	free(void *ptr)
 	t_block *addr;
 	t_zone	*zone;
 
-	if ((zone = valid_addr(ptr)) == (void*)0)
+	if (ptr < (void*)g_base || (zone = valid_addr(ptr)) == (void*)0)
 		return ;
 	addr = ptr - sizeof(t_block);
 	addr->free = 1;
