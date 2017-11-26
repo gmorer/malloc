@@ -35,7 +35,7 @@ void	*malloc(size_t size)
 	if (g_base == ((void*)0))
 	{
 		addr = new_zone((void*)0, size, NULL);
-		g_base = addr - sizeof(t_zone) - sizeof(t_block);
+		g_base = addr == (void*)0 ? addr : addr - sizeof(t_zone) - sizeof(t_block);
 		return (addr);
 	}
 	if ((addr = some_place(size)) != (void*)0)
