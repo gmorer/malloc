@@ -12,8 +12,6 @@
 
 #include "malloc.h"
 
-t_zone		*g_base;
-
 size_t			alloc_size(size_t size)
 {
 	size_t		page;
@@ -21,9 +19,9 @@ size_t			alloc_size(size_t size)
 	page = getpagesize();
 	size += sizeof(t_block) + sizeof(t_zone);
 	if (size < TINY)
-		return ((TINY + page - 1) / page * page);
+		return (TINY);
 	if (size < SMALL)
-		return ((SMALL + page - 1) / page * page);
+		return (SMALL);
 	return ((size + page - 1) / page * page);
 }
 
@@ -52,7 +50,7 @@ void			*some_place(size_t size)
 	t_zone		*tmp;
 	t_block		*rslt;
 
-	tmp = g_base;
+	tmp = get_base();;
 	size += sizeof(t_block);
 	while (tmp)
 	{
@@ -77,7 +75,7 @@ t_zone			*valid_addr(void *addr)
 	t_zone	*zone_tmp;
 	t_block	*block_tmp;
 
-	zone_tmp = g_base;
+	zone_tmp = get_base();
 	while (zone_tmp && (void*)((void*)zone_tmp + sizeof(t_zone) +
 				zone_tmp->size) < addr)
 		zone_tmp = zone_tmp->next;

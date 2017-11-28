@@ -13,8 +13,6 @@
 #include "malloc.h"
 #include <stdio.h>
 
-t_zone		*g_base;
-
 static void	print(t_block *block_tmp, unsigned int *total)
 {
 	printf("%p - %p : %zu octets\n", (void*)((t_block*)block_tmp + 1),
@@ -32,7 +30,7 @@ void		show_alloc_mem(void)
 	t_block			*block_tmp;
 	unsigned int	total;
 
-	zone_tmp = g_base;
+	zone_tmp = get_base();
 	total = 0;
 	while (zone_tmp)
 	{

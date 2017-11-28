@@ -13,8 +13,8 @@
 #ifndef MALLOC_H
 # define MALLOC_H
 
-# define TINY 1024
-# define SMALL 4096
+# define TINY 2 * getpagesize()
+# define SMALL 4 * getpagesize()
 
 # include <sys/mman.h>
 # include <unistd.h>
@@ -43,9 +43,7 @@ struct					s_zone
 };
 
 void					*new_zone(void *addr, size_t size, t_zone *prev);
-
-extern t_zone			*g_base;
-
+t_zone					*get_base(void);
 t_zone					*valid_addr(void *ptr);
 int						is_empty_zone(t_zone *zone);
 void					*add_block(t_zone *zone, size_t size);

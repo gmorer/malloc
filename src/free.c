@@ -12,8 +12,6 @@
 
 #include "malloc.h"
 
-t_zone		*g_base;
-
 void	defragment(t_block *ptr)
 {
 	size_t		size;
@@ -37,15 +35,17 @@ void	free(void *ptr)
 {
 	t_block *addr;
 	t_zone	*zone;
+	t_zone	*base;
 
-	if (ptr < (void*)g_base || (zone = valid_addr(ptr)) == (void*)0)
+	base = get_base();
+	if (ptr < (void*)base || (zone = valid_addr(ptr)) == (void*)0)
 		return ;
 	addr = ptr - sizeof(t_block);
 	addr->free = 1;
 	if (is_empty_zone(zone) && zone->next == (void*)0)
 	{
-		if (zone == g_base)
-			g_base = (void*)0;
+		if (zone == base)
+			base = (void*)0;
 		munmap(zone, zone->size + sizeof(t_zone));
 		return ;
 	}

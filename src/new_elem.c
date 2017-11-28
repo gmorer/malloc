@@ -36,6 +36,7 @@ void		*new_zone(void *addr, size_t size, t_zone *prev)
 	void			*rslt;
 
 	alloc = alloc_size(size);
+	/*
 	getrlimit(RLIMIT_MEMLOCK, &limit);
 	if (alloc > limit.rlim_cur)
 	{
@@ -43,6 +44,7 @@ void		*new_zone(void *addr, size_t size, t_zone *prev)
 		if (alloc > limit.rlim_cur)
 			return ((void*)0);
 	}
+	*/
 	if ((rslt = mmap(addr, alloc, PROT_READ | PROT_WRITE, MAP_ANON
 					| MAP_PRIVATE, -1, 0)) == MAP_FAILED)
 		return ((void*)0);

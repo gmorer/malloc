@@ -47,6 +47,10 @@ void	*realloc(void *ptr, size_t len)
 		return ((void*)0);
 	if (ptr == (void*)0)
 		return (malloc(len));
+	new = malloc(len);
+	free(ptr);
+	return (new);
+	/*
 	if ((valid_addr(ptr)) == (void*)0)
 		return ((void*)0);
 	block = (t_block*)ptr - 1;
@@ -63,4 +67,5 @@ void	*realloc(void *ptr, size_t len)
 		}
 	}
 	return (malloc(len));
+	*/
 }

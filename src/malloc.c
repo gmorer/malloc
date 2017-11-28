@@ -12,7 +12,6 @@
 
 #include "malloc.h"
 
-t_zone		*g_base = ((void*)0);
 
 /*
 ** if first malloc :
@@ -22,25 +21,41 @@ t_zone		*g_base = ((void*)0);
 **   if space avaible :
 **    return (creat new block ine the non-full zone) + sizeof t_block
 **   else
-**    retunr (creat new zone after last zone) + size of t_block and t_zone;
+**    return (creat new zone after last zone) + size of t_block and t_zone;
 */
+
+t_zone	**get_static(void)
+{
+	static t_zone	*base = (void*)0;
+
+	return (&base);
+}
+
+t_zone	*get_base(void)
+{
+	return (*get_static());
+}
 
 void	*malloc(size_t size)
 {
 	void	*addr;
 	t_zone	*temp;
+	t_zone	*base;
 
+	base = get_base();
 	if (size == 0 || size > UINT_MAX)
 		return ((void*)0);
-	if (g_base == ((void*)0))
+	if (base == ((void*)0))
 	{
 		addr = new_zone((void*)0, size, NULL);
-		g_base = addr == (void*)0 ? addr : addr - sizeof(t_zone) - sizeof(t_block);
+		base = addr == (void*)0 ? addr : addr - sizeof(t_zone) - sizeof(t_block);
 		return (addr);
 	}
 	if ((addr = some_place(size)) != (void*)0)
+	{
 		return (addr);
-	temp = g_base;
+	}
+	temp = base;
 	while (temp->next)
 		temp = temp->next;
 	return (new_zone((void*)temp + sizeof(t_zone) + temp->size, size, temp));
