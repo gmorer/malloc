@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:29 by gmorer            #+#    #+#             */
-/*   Updated: 2017/10/07 13:35:27 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/11/30 11:38:28 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void			*some_place(size_t size)
 	t_zone		*tmp;
 	t_block		*rslt;
 
-	tmp = get_base();;
+	tmp = get_base();
 	size += sizeof(t_block);
 	while (tmp)
 	{

@@ -6,7 +6,7 @@
 #    By: gmorer <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/06 11:00:01 by gmorer            #+#    #+#              #
-#    Updated: 2017/07/22 19:13:05 by gmorer           ###   ########.fr        #
+#    Updated: 2017/11/30 11:36:05 by gmorer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ ifeq ($(HOSTTYPE),)
 endif
 NAME = libft_malloc_$(HOSTTYPE).so
 CC = clang
-FLAG = -g
+FLAG = 
 UNAME = $(shell uname)
 ifeq ($(UNAME), Linux)
 	FLAG += -fPIC
@@ -39,8 +39,8 @@ OBJ = $(addprefix $(OPATH), $(CFILES:.c=.o))
 all: $(NAME)
 
 $(NAME) : $(OBJ)
-	$(CC) -shared $(OBJ) $(CFLAGS) -o $(NAME)          #a uncomment pour le rendu final
-	ln -fs libft_malloc_$(HOSTTYPE).so libft_malloc.so  #a uncomment pour le rendu final
+	$(CC) -shared $(OBJ) $(CFLAGS) -o $(NAME)
+	ln -fs libft_malloc_$(HOSTTYPE).so libft_malloc.so
 
 $(OPATH)%.o : $(CPATH)%.c $(HFILES)
 	@mkdir -p $(OPATH)

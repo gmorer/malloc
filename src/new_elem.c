@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2017/10/07 13:26:33 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/11/30 11:37:14 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,6 @@ void		*new_zone(void *addr, size_t size, t_zone *prev)
 	void			*rslt;
 
 	alloc = alloc_size(size);
-	/*
-	getrlimit(RLIMIT_MEMLOCK, &limit);
-	if (alloc > limit.rlim_cur)
-	{
-		alloc = size + sizeof(t_block) + sizeof(t_zone);
-		if (alloc > limit.rlim_cur)
-			return ((void*)0);
-	}
-	*/
 	if ((rslt = mmap(addr, alloc, PROT_READ | PROT_WRITE, MAP_ANON
 					| MAP_PRIVATE, -1, 0)) == MAP_FAILED)
 		return ((void*)0);

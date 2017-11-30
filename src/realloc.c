@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:16 by gmorer            #+#    #+#             */
-/*   Updated: 2017/10/07 13:44:50 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/11/30 11:38:12 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,22 +50,4 @@ void	*realloc(void *ptr, size_t len)
 	new = malloc(len);
 	free(ptr);
 	return (new);
-	/*
-	if ((valid_addr(ptr)) == (void*)0)
-		return ((void*)0);
-	block = (t_block*)ptr - 1;
-	if (len == block->size)
-		return (ptr);
-	if (len > block->size)
-	{
-		if (enought_space_after(block, len) != 0)
-			return (fusion(block, len));
-		else
-		{
-			free(ptr);
-			new = malloc(len);
-		}
-	}
-	return (malloc(len));
-	*/
 }

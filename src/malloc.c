@@ -6,12 +6,11 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2017/10/07 13:44:18 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/11/30 11:37:45 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
-
 
 /*
 ** if first malloc :
@@ -48,7 +47,8 @@ void	*malloc(size_t size)
 	if (base == ((void*)0))
 	{
 		addr = new_zone((void*)0, size, NULL);
-		base = addr == (void*)0 ? addr : addr - sizeof(t_zone) - sizeof(t_block);
+		base = addr == (void*)0 ? addr : addr - sizeof(t_zone) -
+			sizeof(t_block);
 		return (addr);
 	}
 	if ((addr = some_place(size)) != (void*)0)
