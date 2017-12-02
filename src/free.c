@@ -37,15 +37,15 @@ void	free(void *ptr)
 	t_zone	*zone;
 	t_zone	*base;
 
-	base = get_base();
-	if (ptr < (void*)base || (zone = valid_addr(ptr)) == (void*)0)
+	base = get_base(GET, NULL);
+	if (ptr < (void*)base || (zone = valid_addr(ptr)) == NULL)
 		return ;
 	addr = ptr - sizeof(t_block);
 	addr->free = 1;
-	if (is_empty_zone(zone) && zone->next == (void*)0)
+	if (is_empty_zone(zone) && zone->next == NULL)
 	{
 		if (zone == base)
-			base = (void*)0;
+			get_base(POST, NULL);
 		munmap(zone, zone->size + sizeof(t_zone));
 		return ;
 	}

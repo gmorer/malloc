@@ -30,7 +30,7 @@ void		show_alloc_mem(void)
 	t_block			*block_tmp;
 	unsigned int	total;
 
-	zone_tmp = get_base();
+	zone_tmp = get_base(GET, NULL);
 	total = 0;
 	while (zone_tmp)
 	{

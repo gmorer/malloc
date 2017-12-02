@@ -6,11 +6,12 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2017/11/30 11:37:45 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/10/07 13:44:18 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+
 
 /*
 ** if first malloc :
@@ -23,16 +24,18 @@
 **    return (creat new zone after last zone) + size of t_block and t_zone;
 */
 
-t_zone	**get_static(void)
+t_zone	*get_base(enum base req, void *addr)
 {
-	static t_zone	*base = (void*)0;
+	static t_zone	*base = NULL;
 
-	return (&base);
-}
-
-t_zone	*get_base(void)
-{
-	return (*get_static());
+	if (req == GET)
+		return (base);
+	else if (req == POST)
+	{
+		base = addr;
+		return (base);
+	}
+	return (base);
 }
 
 void	*malloc(size_t size)
@@ -41,17 +44,16 @@ void	*malloc(size_t size)
 	t_zone	*temp;
 	t_zone	*base;
 
-	base = get_base();
+	base = get_base(GET, NULL);
 	if (size == 0 || size > UINT_MAX)
-		return ((void*)0);
-	if (base == ((void*)0))
+		return (NULL);
+	if (base == (NULL))
 	{
-		addr = new_zone((void*)0, size, NULL);
-		base = addr == (void*)0 ? addr : addr - sizeof(t_zone) -
-			sizeof(t_block);
+		addr = new_zone(NULL, size, NULL);
+		get_base(POST, addr == NULL ? addr : addr - sizeof(t_zone) - sizeof(t_block));
 		return (addr);
 	}
-	if ((addr = some_place(size)) != (void*)0)
+	if ((addr = some_place(size)) != NULL)
 	{
 		return (addr);
 	}

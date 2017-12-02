@@ -23,6 +23,9 @@
 
 typedef struct s_zone	t_zone;
 
+enum base {GET, POST};
+
+
 typedef struct			s_block
 {
 	size_t				size;
@@ -43,7 +46,7 @@ struct					s_zone
 };
 
 void					*new_zone(void *addr, size_t size, t_zone *prev);
-t_zone					*get_base(void);
+t_zone					*get_base(enum base req, void *addr);
 t_zone					*valid_addr(void *ptr);
 int						is_empty_zone(t_zone *zone);
 void					*add_block(t_zone *zone, size_t size);
