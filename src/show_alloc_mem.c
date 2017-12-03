@@ -11,14 +11,55 @@
 /* ************************************************************************** */
 
 #include "malloc.h"
-#include <stdio.h>
+
+static void print_hex(char c)
+{
+	if (c < 10)
+	{
+		c += 48;
+		write(1, &c, 1);
+	}
+	else
+	{
+		c += 87;
+		write(1, &c, 1);
+	}
+}
+
+void	print_size(size_t n)
+{
+	if (n < 10)
+		print_hex(n);
+	else if (n > 9)
+	{
+		print_size(n / 10);
+		print_size(n % 10);
+	}
+}
+
+static void	print_address(void *addr)
+{
+	long n;
+
+	n = (long)addr;
+	if (n < 16)
+		print_hex(n);
+	else if (n > 9)
+	{
+		print_address((void*)(n / (long)16));
+		print_address((void*)(n % (long)16));
+	}
+}
 
 static void	print(t_block *block_tmp, unsigned int *total)
 {
-	printf("%p - %p : %zu octets\n", (void*)((t_block*)block_tmp + 1),
-			(void*)((t_block*)block_tmp + 1) + block_tmp->size,
-			(void*)((t_block*)block_tmp + 1) + block_tmp->size -
-			(void*)((t_block*)block_tmp + 1));
+	write(1, "0x", 2);
+	print_address((void*)((t_block*)block_tmp + 1));
+	write(1, " - 0x", 5);
+	print_address((void*)((t_block*)block_tmp + 1) + block_tmp->size);
+	write(1, " : ", 3);
+	print_size(block_tmp->size);
+	write(1, " octets\n", 8);
 	*total += (void*)((t_block*)block_tmp + 1) + block_tmp->size -
 		(void*)((t_block*)block_tmp + 1);
 	return ;
@@ -35,11 +76,13 @@ void		show_alloc_mem(void)
 	while (zone_tmp)
 	{
 		if (zone_tmp->size == TINY - sizeof(t_zone))
-			printf("TINY : %p\n", (void*)((t_zone*)zone_tmp + 1));
+			write(1, "TINY : 0x", 9);
 		else if (zone_tmp->size == SMALL - sizeof(t_zone))
-			printf("SMALL : %p\n", (void*)((t_zone*)zone_tmp + 1));
+			write(1, "SMALL : 0x", 9);
 		else
-			printf("LARGE : %p\n", (void*)((t_zone*)zone_tmp + 1));
+			write(1, "LARGE : 0x", 10);
+		print_address((void*)((t_zone*)zone_tmp + 1));
+		write(1, "\n", 1);
 		block_tmp = (void*)((t_zone*)zone_tmp + 1);
 		while (block_tmp)
 		{
@@ -48,6 +91,8 @@ void		show_alloc_mem(void)
 		}
 		zone_tmp = zone_tmp->next;
 	}
-	printf("Total : %u\n", total);
+	write(1, "Total : ", 8);
+	print_size(total);
+	write(1, "\n", 1);
 	return ;
 }
