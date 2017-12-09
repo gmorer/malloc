@@ -6,13 +6,13 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/07 13:28:30 by gmorer            #+#    #+#             */
-/*   Updated: 2017/10/07 13:41:55 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/12/09 08:50:20 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-static void print_hex(char c)
+static void	print_hex(char c)
 {
 	if (c < 10)
 	{
@@ -26,7 +26,7 @@ static void print_hex(char c)
 	}
 }
 
-void	print_size(size_t n)
+static void	print_size(size_t n)
 {
 	if (n < 10)
 		print_hex(n);
@@ -39,7 +39,7 @@ void	print_size(size_t n)
 
 static void	print_address(void *addr)
 {
-	long n;
+	long	n;
 
 	n = (long)addr;
 	if (n < 16)
@@ -51,7 +51,7 @@ static void	print_address(void *addr)
 	}
 }
 
-static void	print(t_block *block_tmp, unsigned int *total)
+static int	print(t_block *block_tmp, unsigned int *total)
 {
 	write(1, "0x", 2);
 	print_address((void*)((t_block*)block_tmp + 1));
@@ -62,7 +62,7 @@ static void	print(t_block *block_tmp, unsigned int *total)
 	write(1, " octets\n", 8);
 	*total += (void*)((t_block*)block_tmp + 1) + block_tmp->size -
 		(void*)((t_block*)block_tmp + 1);
-	return ;
+	return (1);
 }
 
 void		show_alloc_mem(void)
@@ -84,15 +84,11 @@ void		show_alloc_mem(void)
 		print_address((void*)((t_zone*)zone_tmp + 1));
 		write(1, "\n", 1);
 		block_tmp = (void*)((t_zone*)zone_tmp + 1);
-		while (block_tmp)
-		{
-			print(block_tmp, &total);
+		while (block_tmp && print(block_tmp, &total))
 			block_tmp = block_tmp->next;
-		}
 		zone_tmp = zone_tmp->next;
 	}
 	write(1, "Total : ", 8);
 	print_size(total);
 	write(1, "\n", 1);
-	return ;
 }

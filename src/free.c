@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:04 by gmorer            #+#    #+#             */
-/*   Updated: 2017/10/07 13:44:09 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/12/09 08:08:57 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@ void	free(void *ptr)
 	if (is_empty_zone(zone) && zone->next == NULL)
 	{
 		if (zone == base)
+		{
 			get_base(POST, NULL);
+		}
 		munmap(zone, zone->size + sizeof(t_zone));
 		return ;
 	}

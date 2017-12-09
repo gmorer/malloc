@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:29 by gmorer            #+#    #+#             */
-/*   Updated: 2017/10/07 13:35:27 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/12/09 08:40:46 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,14 @@ t_block			*find_empty_block(size_t size, t_zone *zone)
 	{
 		if (tmp->free && tmp->size > size + sizeof(t_block) + 1)
 		{
-			new_block(tmp + size + sizeof(t_block), tmp->size -
+			new_block((void*)tmp + size + sizeof(t_block), tmp->size -
 					(size + sizeof(t_block)), zone, tmp);
 			tmp->size = size;
 			tmp->free = 0;
+			return (tmp);
+		}
+		else if (tmp->free && tmp->size >= size)
+		{
 			return (tmp);
 		}
 		tmp = tmp->next;
@@ -55,7 +59,9 @@ void			*some_place(size_t size)
 	while (tmp)
 	{
 		if ((rslt = find_empty_block(size, tmp)) != NULL)
+		{
 			return (rslt + 1);
+		}
 		if (tmp->size - tmp->use_space >= size + sizeof(t_block))
 		{
 			rslt = (void*)((t_zone*)tmp + 1);
