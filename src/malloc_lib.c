@@ -42,6 +42,7 @@ t_block			*find_empty_block(size_t size, t_zone *zone)
 		}
 		else if (tmp->free && tmp->size >= size)
 		{
+			tmp->free = 0;
 			return (tmp);
 		}
 		tmp = tmp->next;
