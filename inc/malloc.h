@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:58:35 by gmorer            #+#    #+#             */
-/*   Updated: 2017/10/07 13:45:19 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/12/10 14:19:43 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void					*some_place(size_t size);
 size_t					alloc_size(size_t size);
 void					free(void *ptr);
 void					*realloc(void *ptr, size_t size);
+void					*calloc(size_t count, size_t size);
 void					*malloc(size_t size);
 void					show_alloc_mem();
 
