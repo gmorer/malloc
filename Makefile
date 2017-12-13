@@ -20,7 +20,7 @@ UNAME = $(shell uname)
 ifeq ($(UNAME), Linux)
 	FLAG += -fPIC
 endif
-CFLAGS= -Weverything #-fsanitize=address
+CFLAGS= -Weverything
 CPATH = src/
 HPATH = inc/
 OPATH = obj/
