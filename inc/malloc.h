@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:58:35 by gmorer            #+#    #+#             */
-/*   Updated: 2017/12/10 14:19:43 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/12/14 14:27:39 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@
 
 typedef struct s_zone	t_zone;
 
-enum base {GET, POST};
-
+enum	e_base {GET, POST};
 
 typedef struct			s_block
 {
@@ -46,7 +45,7 @@ struct					s_zone
 };
 
 void					*new_zone(void *addr, size_t size, t_zone *prev);
-t_zone					*get_base(enum base req, void *addr);
+t_zone					*get_base(enum e_base req, void *addr);
 t_zone					*valid_addr(void *ptr);
 int						is_empty_zone(t_zone *zone);
 void					*add_block(t_zone *zone, size_t size);

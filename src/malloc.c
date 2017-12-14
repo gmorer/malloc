@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2017/12/09 08:43:27 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/12/14 14:28:02 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 **    return (creat new zone after last zone) + size of t_block and t_zone;
 */
 
-t_zone	*get_base(enum base req, void *addr)
+t_zone	*get_base(enum e_base req, void *addr)
 {
 	static t_zone	*base = NULL;
 
