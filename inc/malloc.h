@@ -6,15 +6,18 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:58:35 by gmorer            #+#    #+#             */
-/*   Updated: 2017/12/14 14:27:39 by gmorer           ###   ########.fr       */
+/*   Updated: 2017/12/31 18:13:13 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
 
-# define TINY 2 * getpagesize()
-# define SMALL 4 * getpagesize()
+//# define TINY 2 * getpagesize() * 7
+//# define SMALL 4 * getpagesize() * 6
+
+# define TINY 256
+# define SMALL 1024
 
 # include <sys/mman.h>
 # include <unistd.h>

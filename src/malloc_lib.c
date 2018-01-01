@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:29 by gmorer            #+#    #+#             */
-/*   Updated: 2017/12/09 08:40:46 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/01/01 04:53:06 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ size_t			alloc_size(size_t size)
 
 	page = getpagesize();
 	size += sizeof(t_block) + sizeof(t_zone);
-	if (size < TINY)
-		return (TINY);
-	if (size < SMALL)
-		return (SMALL);
+	if (size <= TINY)
+		return ((TINY * 100 - 1) / page * page);
+	if (size <= SMALL)
+		return ((SMALL * 100 - 1) / page * page);
 	return ((size + page - 1) / page * page);
 }
 
 t_block			*find_empty_block(size_t size, t_zone *zone)
 {
 	t_block		*tmp;
+
 
 	tmp = (void*)((t_zone*)zone + 1);
 	while (tmp)
@@ -59,18 +60,21 @@ void			*some_place(size_t size)
 	size += sizeof(t_block);
 	while (tmp)
 	{
-		if ((rslt = find_empty_block(size, tmp)) != NULL)
+		if (tmp && tmp->size == alloc_size(size) - sizeof(t_zone))
 		{
-			return (rslt + 1);
-		}
-		if (tmp->size - tmp->use_space >= size + sizeof(t_block))
-		{
-			rslt = (void*)((t_zone*)tmp + 1);
-			while (rslt->next)
-				rslt = rslt->next;
-			rslt = new_block((void*)rslt + sizeof(t_block) + rslt->size,
-					size - sizeof(t_block), tmp, rslt);
-			return (rslt);
+			if ((rslt = find_empty_block(size, tmp)) != NULL)
+			{
+				return (rslt + 1);
+			}
+			if (tmp->size - tmp->use_space >= size + sizeof(t_block))
+			{
+				rslt = (void*)((t_zone*)tmp + 1);
+				while (rslt->next)
+					rslt = rslt->next;
+				rslt = new_block((void*)rslt + sizeof(t_block) + rslt->size,
+						size - sizeof(t_block), tmp, rslt);
+				return (rslt);
+			}
 		}
 		tmp = tmp->next;
 	}

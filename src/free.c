@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:04 by gmorer            #+#    #+#             */
-/*   Updated: 2017/12/09 08:08:57 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/01/01 04:54:42 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,20 @@ void	defragment(t_block *ptr)
 	return ;
 }
 
+static t_zone	*get_prev_zone(t_zone *zone)
+{
+	t_zone *prev;
+	t_zone *tmp;
+
+	tmp = get_base(GET, NULL);
+	while (tmp != zone)
+	{
+		prev = tmp;
+		tmp = tmp->next;
+	}
+	return (prev);
+}
+
 void	free(void *ptr)
 {
 	t_block *addr;
@@ -49,6 +63,8 @@ void	free(void *ptr)
 			get_base(POST, NULL);
 		}
 		munmap(zone, zone->size + sizeof(t_zone));
+		zone = get_prev_zone(zone);
+		zone->next = NULL;
 		return ;
 	}
 	defragment(addr);

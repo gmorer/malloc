@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2017/12/09 08:41:51 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/01/01 04:54:43 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,15 @@ void		*new_zone(void *addr, size_t size, t_zone *prev)
 	alloc = alloc_size(size);
 	if ((rslt = mmap(addr, alloc, PROT_READ | PROT_WRITE, MAP_ANON
 					| MAP_PRIVATE, -1, 0)) == MAP_FAILED)
+	{
 		return ((void*)0);
+	}
 	zone = rslt;
 	zone->size = alloc - sizeof(t_zone);
 	if (prev)
+	{
 		prev->next = zone;
+	}
 	zone->next = (void*)0;
 	zone->use_space = 0;
 	return (new_block(rslt + sizeof(t_zone), size, (t_zone*)rslt, (void*)0));
