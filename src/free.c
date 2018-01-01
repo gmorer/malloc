@@ -6,13 +6,13 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:04 by gmorer            #+#    #+#             */
-/*   Updated: 2018/01/01 04:54:42 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/01/01 04:56:44 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
 
-void	defragment(t_block *ptr)
+static void		defragment(t_block *ptr)
 {
 	size_t		size;
 	void		*start;
@@ -33,8 +33,8 @@ void	defragment(t_block *ptr)
 
 static t_zone	*get_prev_zone(t_zone *zone)
 {
-	t_zone *prev;
-	t_zone *tmp;
+	t_zone		*prev;
+	t_zone		*tmp;
 
 	tmp = get_base(GET, NULL);
 	while (tmp != zone)
@@ -45,11 +45,11 @@ static t_zone	*get_prev_zone(t_zone *zone)
 	return (prev);
 }
 
-void	free(void *ptr)
+void			free(void *ptr)
 {
-	t_block *addr;
-	t_zone	*zone;
-	t_zone	*base;
+	t_block		*addr;
+	t_zone		*zone;
+	t_zone		*base;
 
 	base = get_base(GET, NULL);
 	if (ptr < (void*)base || (zone = valid_addr(ptr)) == NULL)

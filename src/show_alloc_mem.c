@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/07 13:28:30 by gmorer            #+#    #+#             */
-/*   Updated: 2018/01/01 03:51:43 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/01/01 05:47:58 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,13 @@ void		show_alloc_mem(void)
 	total = 0;
 	while (zone_tmp)
 	{
-		if (zone_tmp->size == alloc_size(TINY -
-					sizeof(t_block) - sizeof(t_zone)) - sizeof(t_zone))
-			write(1, "TINY : 0x", 9);
-		else if (zone_tmp->size == alloc_size(SMALL -
-					sizeof(t_block) - sizeof(t_zone)) - sizeof(t_zone))
-			write(1, "SMALL : 0x", 9);
+		if (zone_tmp->size > alloc_size(SMALL - sizeof(t_block)
+					- sizeof(t_zone)) - sizeof(t_zone))
+			write(1, "LARGE : 0x", 11);
 		else
-			write(1, "LARGE : 0x", 10);
+			write(1, zone_tmp->size == alloc_size(TINY -
+					sizeof(t_block) - sizeof(t_zone)) - sizeof(t_zone) ?
+					"TINY : 0x" : "SMALL : 0x", 10);
 		print_address((void*)((t_zone*)zone_tmp + 1));
 		write(1, "\n", 1);
 		block_tmp = (void*)((t_zone*)zone_tmp + 1);
