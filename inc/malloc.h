@@ -6,15 +6,12 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:58:35 by gmorer            #+#    #+#             */
-/*   Updated: 2017/12/31 18:13:13 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/01/05 09:33:10 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
-
-//# define TINY 2 * getpagesize() * 7
-//# define SMALL 4 * getpagesize() * 6
 
 # define TINY 256
 # define SMALL 1024
