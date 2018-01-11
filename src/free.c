@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:04 by gmorer            #+#    #+#             */
-/*   Updated: 2018/01/01 04:56:44 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/01/11 17:23:17 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static void		defragment(t_block *ptr)
 	if (ptr->next && ptr->next->free == 1)
 	{
 		ptr->next = ptr->next->next;
-		ptr->size += ptr->next->size + sizeof(t_block);
+		if (ptr->next)
+			ptr->size += ptr->next->size + sizeof(t_block);
 	}
 	if (ptr->prev && ptr->prev->free == 1)
 	{
