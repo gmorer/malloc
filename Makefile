@@ -6,7 +6,7 @@
 #    By: gmorer <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/06/06 11:00:01 by gmorer            #+#    #+#              #
-#    Updated: 2017/11/30 11:36:05 by gmorer           ###   ########.fr        #
+#    Updated: 2018/01/19 12:15:34 by gmorer           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,8 @@ CFILES =	malloc.c\
 			realloc.c\
 			free.c\
 			new_elem.c\
-			show_alloc_mem.c
+			show_alloc_mem.c\
+			calloc.c
 HFILES = inc/malloc.h
 INC = $(addprefix -I , $(HPATH))
 OBJ = $(addprefix $(OPATH), $(CFILES:.c=.o))
