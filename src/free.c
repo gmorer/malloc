@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:04 by gmorer            #+#    #+#             */
-/*   Updated: 2018/01/11 17:23:17 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/01/19 12:13:18 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void			free(void *ptr)
 	if (ptr < (void*)base || (zone = valid_addr(ptr)) == NULL)
 		return ;
 	addr = ptr - sizeof(t_block);
+	if (addr->size < SMALL)
+		return ;
 	addr->free = 1;
 	if (is_empty_zone(zone) && zone->next == NULL)
 	{
