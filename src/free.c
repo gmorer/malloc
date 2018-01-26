@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:04 by gmorer            #+#    #+#             */
-/*   Updated: 2018/01/19 12:14:36 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/01/26 12:23:51 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void			free(void *ptr)
 		{
 			get_base(POST, NULL);
 		}
-	if (addr->size < SMALL)
-		return ;
+		if (addr->size < SMALL)
+			return ;
 		munmap(zone, zone->size + sizeof(t_zone));
 		zone = get_prev_zone(zone);
 		zone->next = NULL;

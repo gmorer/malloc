@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:16 by gmorer            #+#    #+#             */
-/*   Updated: 2018/01/19 11:58:49 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/01/26 12:23:16 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		*realloc(void *ptr, size_t len)
 		return (malloc(len));
 	if (ptr < (void*)get_base(GET, NULL) || valid_addr(ptr) == NULL)
 		return (NULL);
-	if (!(new = malloc(len)))
+	if ((new = malloc(len)) == NULL)
 		return (NULL);
 	block = ptr - sizeof(t_block);
 	ft_memcpy(new, ptr, len > block->size ? block->size : len);
