@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/07 13:28:30 by gmorer            #+#    #+#             */
-/*   Updated: 2018/01/01 05:47:58 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/02/10 17:39:20 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void		show_alloc_mem(void)
 	total = 0;
 	while (zone_tmp)
 	{
-		if (zone_tmp->size > alloc_size(SMALL - sizeof(t_block)
+		if (zone_tmp->size >= alloc_size(SMALL - sizeof(t_block)
 					- sizeof(t_zone)) - sizeof(t_zone))
 			write(1, "LARGE : 0x", 11);
 		else

@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2018/01/05 09:22:23 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/02/10 17:42:37 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void		*new_zone(void *addr, size_t size, t_zone *prev)
 		return ((void*)0);
 	}
 	zone = rslt;
+	zone->type = /* TODO */TINY;
 	zone->size = alloc - sizeof(t_zone);
 	if (prev)
 	{

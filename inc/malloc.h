@@ -6,15 +6,15 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:58:35 by gmorer            #+#    #+#             */
-/*   Updated: 2018/01/05 09:33:10 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/02/10 17:43:03 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MALLOC_H
 # define MALLOC_H
 
-# define TINY 256
-# define SMALL 1024
+# define TINY_SIZE 256
+# define SMALL_SIZE 4096
 
 # include <sys/mman.h>
 # include <unistd.h>
@@ -24,6 +24,7 @@
 typedef struct s_zone	t_zone;
 
 enum	e_base {GET, POST};
+enum	e_type {TINY, SMALL, LARGE};
 
 typedef struct			s_block
 {
@@ -39,6 +40,7 @@ void					*new_block(void *addr, size_t size,
 
 struct					s_zone
 {
+	enum e_type			type;
 	size_t				size;
 	size_t				use_space;
 	struct s_zone		*next;

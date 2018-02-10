@@ -6,11 +6,12 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:29 by gmorer            #+#    #+#             */
-/*   Updated: 2018/01/01 04:57:20 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/02/10 17:43:39 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "malloc.h"
+#include <stdio.h>
 
 size_t			alloc_size(size_t size)
 {
@@ -18,10 +19,11 @@ size_t			alloc_size(size_t size)
 
 	page = getpagesize();
 	size += sizeof(t_block) + sizeof(t_zone);
-	if (size <= TINY)
-		return ((TINY * 100 - 1) / page * page);
-	if (size <= SMALL)
-		return ((SMALL * 100 - 1) / page * page);
+	if (size <= TINY_SIZE)
+		return ((TINY_SIZE * 500 - 1) / page * page);
+	if (size <= SMALL_SIZE)
+		return ((SMALL_SIZE * 500 - 1) / page * page);
+//	write(1, "LARGE\n", 6);
 	return ((size + page - 1) / page * page);
 }
 
