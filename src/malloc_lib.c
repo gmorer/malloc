@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:41:29 by gmorer            #+#    #+#             */
-/*   Updated: 2018/02/10 17:43:39 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/02/12 14:01:42 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ size_t			alloc_size(size_t size)
 		return ((TINY_SIZE * 500 - 1) / page * page);
 	if (size <= SMALL_SIZE)
 		return ((SMALL_SIZE * 500 - 1) / page * page);
-//	write(1, "LARGE\n", 6);
 	return ((size + page - 1) / page * page);
 }
 
@@ -61,7 +60,7 @@ void			*some_place(size_t size)
 	size += sizeof(t_block);
 	while (tmp)
 	{
-		if (tmp && tmp->size == alloc_size(size) - sizeof(t_zone))
+		if (tmp && tmp->type == zone_type(size - sizeof(t_block)))
 		{
 			if ((rslt = find_empty_block(size, tmp)) != NULL)
 				return (rslt + 1);

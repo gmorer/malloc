@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:40:52 by gmorer            #+#    #+#             */
-/*   Updated: 2018/02/08 14:57:31 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/02/12 14:01:20 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ void	*malloc(size_t size)
 				addr - sizeof(t_zone) - sizeof(t_block));
 		return (addr);
 	}
-	if (size <= SMALL && (addr = some_place(size)) != NULL)
-	{
+	if (size <= SMALL_SIZE && (addr = some_place(size)) != NULL)
 		return (addr);
-	}
 	temp = base;
 	while (temp->next)
 		temp = temp->next;

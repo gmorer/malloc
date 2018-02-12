@@ -6,7 +6,7 @@
 /*   By: gmorer <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/07 15:58:35 by gmorer            #+#    #+#             */
-/*   Updated: 2018/02/10 17:43:03 by gmorer           ###   ########.fr       */
+/*   Updated: 2018/02/12 11:06:47 by gmorer           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ struct					s_zone
 };
 
 void					*new_zone(void *addr, size_t size, t_zone *prev);
+enum e_type				zone_type(size_t size);
 t_zone					*get_base(enum e_base req, void *addr);
 t_zone					*valid_addr(void *ptr);
 int						is_empty_zone(t_zone *zone);
